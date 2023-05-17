@@ -1,19 +1,19 @@
-const { addElement, isPresent } = require('./app');
+const { BloomFilter } = require('./app');
 
 test('added element is present', () => {
-    var array = Array(16).fill(false);
-    addElement("apple", array);
-    addElement("banana", array);
-    addElement("cereal", array);
+    var filter = new BloomFilter(3, 16);
+    filter.addElement("apple");
+    filter.addElement("banana");
+    filter.addElement("cereal");
 
-    expect(isPresent("apple", array)).toBeTruthy();
+    expect(filter.isPresent("apple")).toBeTruthy();
 });
 
 test('absent element is not present', () => {
-    var array = Array(16).fill(false);
-    addElement("apple", array);
-    addElement("banana", array);
-    addElement("cereal", array);
+    var filter = new BloomFilter(3, 16);
+    filter.addElement("apple");
+    filter.addElement("banana");
+    filter.addElement("cereal");
 
-    expect(isPresent("dog", array)).toBeFalsy();
+    expect(filter.isPresent("dog")).toBeFalsy();
 });
