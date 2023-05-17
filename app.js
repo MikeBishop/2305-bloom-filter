@@ -9,19 +9,13 @@ class BloomFilter {
     }
 
     addElement(word) {
-        let h0 = this.hash(0, word, this.array.length);
-        let h1 = this.hash(1, word, this.array.length);
-        let h2 = this.hash(2, word, this.array.length);
-        this.array[h0] = true;
-        this.array[h1] = true;
-        this.array[h2] = true;
+        let indices = Array(this.numHash).fill().map((_, i) => this.hash(i, word, this.array.length));
+        indices.forEach(i => this.array[i] = true);
     }
 
     isPresent(word) {
-        let h0 = this.hash(0, word, this.array.length);
-        let h1 = this.hash(1, word, this.array.length);
-        let h2 = this.hash(2, word, this.array.length);
-        return this.array[h0] && this.array[h1] && this.array[h2];
+        let indices = Array(this.numHash).fill().map((_, i) => this.hash(i, word, this.array.length));
+        return indices.every(i => this.array[i]);
     }
 
     hash(i, word, length) {
